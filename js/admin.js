@@ -2,7 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Referências aos elementos do DOM
-  const adminLoginForm = document.querySelector('#admin-login form');
+  const adminLoginForm = document.getElementById('admin-login-form');
+  const googleLoginBtn = document.getElementById('googleLoginBtn');
   const adminPanel = document.getElementById('admin-panel');
   const eleicaoForm = document.getElementById('eleicao-form');
   const candidatoForm = document.getElementById('candidato-form');
@@ -47,6 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Login de administrador
     adminLoginForm.addEventListener('submit', handleAdminLogin);
     
+    // Login com Google
+    googleLoginBtn.addEventListener('click', handleGoogleLogin);
+    
+    // Logout
+    document.getElementById('btnLogout').addEventListener('click', handleLogout);
+    
     // Formulários
     eleicaoForm.addEventListener('submit', handleEleicaoSubmit);
     candidatoForm.addEventListener('submit', handleCandidatoSubmit);
@@ -61,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
   async function handleAdminLogin(e) {
     e.preventDefault();
     
-    const email = e.target.querySelector('input[type="email"]').value;
-    const password = e.target.querySelector('input[type="password"]').value;
+    const email = document.getElementById('floatingEmail').value;
+    const password = document.getElementById('floatingPassword').value;
     
     try {
       showLoader('Autenticando...');
@@ -72,6 +79,30 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       hideLoader();
       showNotification('Erro de autenticação: ' + error.message, 'error');
+    }
+  }
+  
+  async function handleGoogleLogin() {
+    try {
+      showLoader('Autenticando com Google...');
+      await signInWithGoogle();
+      hideLoader();
+    } catch (error) {
+      hideLoader();
+      showNotification('Erro ao autenticar com Google: ' + error.message, 'error');
+    }
+  }
+  
+  async function handleLogout() {
+    try {
+      showLoader('Saindo...');
+      await auth.signOut();
+      currentUser = null;
+      hideLoader();
+      showNotification('Você saiu do sistema', 'info');
+    } catch (error) {
+      hideLoader();
+      showNotification('Erro ao sair: ' + error.message, 'error');
     }
   }
   
@@ -822,48 +853,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function showLoader(message = 'Carregando...') {
-    // Criar loader se não existir
-    let loader = document.getElementById('app-loader');
+    const loaderOverlay = document.getElementById('loader-overlay');
+    const loaderMessage = document.getElementById('loader-message');
     
-    if (!loader) {
-      loader = document.createElement('div');
-      loader.id = 'app-loader';
-      loader.className = 'loader-overlay';
-      loader.innerHTML = `
-        <div class="loader-content">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Carregando...</span>
-          </div>
-          <p class="mt-2 loader-message">${message}</p>
-        </div>
-      `;
-      
-      document.body.appendChild(loader);
-    } else {
-      loader.querySelector('.loader-message').textContent = message;
-      loader.style.display = 'flex';
+    if (loaderMessage) {
+      loaderMessage.textContent = message;
+    }
+    
+    if (loaderOverlay) {
+      loaderOverlay.style.display = 'flex';
     }
   }
   
   function hideLoader() {
-    const loader = document.getElementById('app-loader');
-    if (loader) {
-      loader.style.display = 'none';
+    const loaderOverlay = document.getElementById('loader-overlay');
+    if (loaderOverlay) {
+      loaderOverlay.style.display = 'none';
     }
   }
   
   function showNotification(message, type = 'info') {
-    // Criar container de notificações se não existir
-    let notifContainer = document.getElementById('notification-container');
+    const notificationToast = document.getElementById('notification-toast');
+    const notificationMessage = document.getElementById('notification-message');
     
-    if (!notifContainer) {
-      notifContainer = document.createElement('div');
-      notifContainer.id = 'notification-container';
-      notifContainer.className = 'position-fixed top-0 end-0 p-3';
-      notifContainer.style.zIndex = '1050';
-      
-      document.body.appendChild(notifContainer);
+    // Definir a cor baseada no tipo
+    let bgColor = 'bg-info';
+    if (type === 'success') bgColor = 'bg-success';
+    if (type === 'error') bgColor = 'bg-danger';
+    if (type === 'warning') bgColor = 'bg-warning';
+    
+    // Remover classes anteriores
+    notificationToast.classList.remove('bg-info', 'bg-success', 'bg-danger', 'bg-warning');
+    
+    // Adicionar classe de cor apropriada
+    notificationToast.classList.add(bgColor);
+    
+    // Definir a mensagem
+    if (notificationMessage) {
+      notificationMessage.textContent = message;
     }
+    
+    // Mostrar a notificação
+    const toast = new bootstrap.Toast(notificationToast);
+    toast.show();
+  }
     
     // Criar a notificação
     const notification = document.createElement('div');
@@ -892,4 +925,4 @@ document.addEventListener('DOMContentLoaded', () => {
       notification.remove();
     });
   }
-});
+);
