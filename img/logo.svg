@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <style>
+    .logo-primary {
+      fill: #3a36e0;
+    }
+    .logo-secondary {
+      fill: #6c63ff;
+    }
+    .logo-accent {
+      fill: #00d4ff;
+    }
+  </style>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#6c63ff" stroke-width="2"/>
+  <circle cx="100" cy="100" r="85" fill="none" stroke="#3a36e0" stroke-width="4" stroke-dasharray="20,10"/>
+  <path class="logo-primary" d="M100 30 L140 85 L120 85 L120 150 L80 150 L80 85 L60 85 Z"/>
+  <circle class="logo-accent" cx="100" cy="100" r="20"/>
+</svg>

@@ -1,0 +1,507 @@
+:root {
+  --primary-color: #3a36e0;
+  --secondary-color: #6c63ff;
+  --accent-color: #00d4ff;
+  --dark-color: #14142b;
+  --light-color: #f9f9ff;
+  --success-color: #00ba88;
+  --warning-color: #ff9f00;
+  --danger-color: #ff4757;
+  --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  --gradient-accent: linear-gradient(135deg, var(--accent-color), #9c1fff);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background Effects */
+.login-page {
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  color: #fff;
+}
+
+.particles-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px, 30px 30px;
+  background-position: 0 0, 25px 25px;
+  animation: particles 120s linear infinite;
+  z-index: -1;
+}
+
+@keyframes particles {
+  0% {
+    background-position: 0 0, 25px 25px;
+  }
+  100% {
+    background-position: 1000px 1000px, 1025px 1025px;
+  }
+}
+
+/* Text Styles */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Card Styles */
+.card, .login-card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.login-card {
+  background: rgba(20, 20, 43, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(106, 149, 255, 0.1);
+}
+
+/* Form Controls */
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 1px solid rgba(106, 149, 255, 0.2);
+  padding: 0.75rem 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 149, 255, 0.25);
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > label {
+  padding: 1rem 0.75rem;
+}
+
+/* Button Styles */
+.btn {
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  border: none;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  transform: translateY(-2px);
+}
+
+.btn-glow {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.btn-glow:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  z-index: -1;
+  transition: var(--transition);
+  opacity: 0.7;
+}
+
+.btn-glow:hover:after {
+  opacity: 1;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 20px var(--primary-color);
+}
+
+/* Logo Animation */
+.logo-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-container:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(58, 54, 224, 0.1) 0%, rgba(58, 54, 224, 0) 70%);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+  padding: 1.5rem;
+  background: var(--light-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.nav-tabs-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.nav-tabs {
+  border-radius: 8px;
+  overflow: hidden;
+  border: none;
+  background: rgba(106, 149, 255, 0.1);
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  color: var(--dark-color);
+  padding: 1rem;
+  font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+/* Table Styles */
+.table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.table thead th {
+  border-bottom: none;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.table tbody tr {
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .login-card {
+    margin: 1rem;
+  }
+  
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .tab-content {
+    padding: 1rem !important;
+  }
+}
+
+/* Animation for page transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Election Cards */
+.election-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.election-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Candidate Cards */
+.candidate-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.candidate-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.candidate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== Loader ===== */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.loader-message {
+  margin-top: 1rem;
+  color: var(--dark-color);
+}
+
+/* ===== Toast Notifications ===== */
+.toast {
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ===== Voting Styles ===== */
+.eleicoes-list .list-group-item {
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: var(--transition);
+  border: 1px solid rgba(106, 149, 255, 0.2);
+}
+
+.eleicoes-list .list-group-item:hover {
+  background-color: rgba(106, 149, 255, 0.05);
+}
+
+.eleicoes-list .list-group-item.active {
+  background: var(--gradient-primary);
+  border-color: var(--primary-color);
+}
+
+.urna-container {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.voting-area {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.candidate-photo-container {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--light-color);
+  box-shadow: var(--shadow-md);
+}
+
+.candidate-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.candidate-card {
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.candidate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.candidate-card.selected {
+  border-color: var(--primary-color);
+  background: rgba(106, 149, 255, 0.1);
+}
+
+.selected-candidate-info {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.selected-candidate-details {
+  padding: 1rem;
+}
+
+.selected-candidate-details .candidate-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.urna-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.urna-buttons .btn {
+  flex: 1;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Success Animation */
+.success-animation {
+  animation: successPulse 2s infinite;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Results Page Styles */
+.stat-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  height: 100%;
+}
+
+.stat-card .card-body {
+  padding: 1.5rem;
+}
+
+.stat-icon {
+  background: rgba(255, 255, 255, 0.2);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* Medal colors for ranking */
+.medal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
+
+.medal.gold {
+  background: linear-gradient(135deg, #ffd700, #ffcc00);
+  color: #5a4700;
+}
+
+.medal.silver {
+  background: linear-gradient(135deg, #c0c0c0, #a8a8a8);
+  color: #494949;
+}
+
+.medal.bronze {
+  background: linear-gradient(135deg, #cd7f32, #a05a2c);
+  color: #3d2213;
+}
