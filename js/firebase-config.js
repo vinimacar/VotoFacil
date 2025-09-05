@@ -4,7 +4,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDDtcc3MYu28GqhFEUBtep9lhZcS8uDIuo",
   authDomain: "votofacil-30139.firebaseapp.com",
   projectId: "votofacil-30139",
-  storageBucket: "votofacil-30139.firebasestorage.app",
+  storageBucket: "votofacil-30139.appspot.com",
   messagingSenderId: "297918826223",
   appId: "1:297918826223:web:ec329db87d43776ce37d1a",
   measurementId: "G-1YD0GGXDMD",
@@ -12,11 +12,22 @@ const firebaseConfig = {
 };
 
 // Inicialização do Firebase
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 const rtdb = firebase.database();
+
+// Configurar provedor de autenticação do Google
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
+// Função para autenticação com Google
+function signInWithGoogle() {
+  return auth.signInWithPopup(googleProvider);
+}
 
 // Verificação de conexão para sincronização offline/online
 const connectedRef = rtdb.ref(".info/connected");
