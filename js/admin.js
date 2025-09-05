@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       hideLoader();
       showNotification('Erro de autenticação: ' + error.message, 'error');
-    }
   }
   
   async function handleGoogleLogin() {
@@ -872,57 +871,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   
-  function showNotification(message, type = 'info') {
-    const notificationToast = document.getElementById('notification-toast');
-    const notificationMessage = document.getElementById('notification-message');
-    
-    // Definir a cor baseada no tipo
-    let bgColor = 'bg-info';
-    if (type === 'success') bgColor = 'bg-success';
-    if (type === 'error') bgColor = 'bg-danger';
-    if (type === 'warning') bgColor = 'bg-warning';
-    
-    // Remover classes anteriores
-    notificationToast.classList.remove('bg-info', 'bg-success', 'bg-danger', 'bg-warning');
-    
-    // Adicionar classe de cor apropriada
-    notificationToast.classList.add(bgColor);
-    
-    // Definir a mensagem
-    if (notificationMessage) {
-      notificationMessage.textContent = message;
+    function showNotification(message, type = 'info') {
+      const notificationToast = document.getElementById('notification-toast');
+      const notificationMessage = document.getElementById('notification-message');
+      
+      // Definir a cor baseada no tipo
+      let bgColor = 'bg-info';
+      if (type === 'success') bgColor = 'bg-success';
+      if (type === 'error') bgColor = 'bg-danger';
+      if (type === 'warning') bgColor = 'bg-warning';
+      
+      // Remover classes anteriores
+      notificationToast.classList.remove('bg-info', 'bg-success', 'bg-danger', 'bg-warning');
+      
+      // Adicionar classe de cor apropriada
+      notificationToast.classList.add(bgColor);
+      
+      // Definir a mensagem
+      if (notificationMessage) {
+        notificationMessage.textContent = message;
+      }
+      
+      // Mostrar a notificação
+      const toast = new bootstrap.Toast(notificationToast);
+      toast.show();
     }
-    
-    // Mostrar a notificação
-    const toast = new bootstrap.Toast(notificationToast);
-    toast.show();
   }
-    
-    // Criar a notificação
-    const notification = document.createElement('div');
-    notification.className = `toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'}`;
-    notification.setAttribute('role', 'alert');
-    notification.setAttribute('aria-live', 'assertive');
-    notification.setAttribute('aria-atomic', 'true');
-    
-    notification.innerHTML = `
-      <div class="d-flex">
-        <div class="toast-body">
-          ${message}
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>
-      </div>
-    `;
-    
-    notifContainer.appendChild(notification);
-    
-    // Mostrar a notificação
-    const toast = new bootstrap.Toast(notification, { autohide: true, delay: 5000 });
-    toast.show();
-    
-    // Remover após fechar
-    notification.addEventListener('hidden.bs.toast', () => {
-      notification.remove();
-    });
-  }
-);
