@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo - Urna Eletrônica Web</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+  <div class="particles-bg"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card login-card">
+          <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+              <div class="logo-container mb-4">
+                <i class="fas fa-vote-yea fa-3x text-primary"></i>
+              </div>
+              <h1 class="display-5 fw-bold text-gradient">VotoFácil</h1>
+              <p class="text-muted">Sistema de Votação Eletrônica</p>
+            </div>
+            <!-- Login Admin -->
+            <div id="admin-login" class="mb-4">
+              <h4 class="card-title text-center mb-4">Acesso Administrativo</h4>
+              <form>
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="floatingEmail" placeholder="Email" required>
+                  <label for="floatingEmail"><i class="fas fa-user me-2"></i>Email</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" required>
+                  <label for="floatingPassword"><i class="fas fa-lock me-2"></i>Senha</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 btn-glow">Entrar <i class="fas fa-arrow-right ms-2"></i></button>
+              </form>
+            </div>
+    <!-- Painel de Controle (aparece após login) -->
+    <div id="admin-panel" style="display:none;">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <h2 class="fw-bold text-gradient">Painel de Controle</h2>
+          <p class="text-muted">Gerencie suas eleições, candidatos e eleitores</p>
+        </div>
+        
+        <div class="nav-tabs-wrapper">
+          <ul class="nav nav-tabs nav-fill" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="eleicoes-tab" data-bs-toggle="tab" data-bs-target="#eleicoes" type="button" role="tab">
+                <i class="fas fa-calendar-check me-2"></i>Eleições
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="candidatos-tab" data-bs-toggle="tab" data-bs-target="#candidatos" type="button" role="tab">
+                <i class="fas fa-user-tie me-2"></i>Candidatos
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="eleitores-tab" data-bs-toggle="tab" data-bs-target="#eleitores" type="button" role="tab">
+                <i class="fas fa-users me-2"></i>Eleitores
+              </button>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="tab-content p-4" id="adminTabsContent">
+          <!-- Tab Eleições -->
+          <div class="tab-pane fade show active" id="eleicoes" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h4 class="card-title"><i class="fas fa-calendar-check me-2"></i>Cadastro de Eleição</h4>
+              <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#novaEleicaoModal">
+                <i class="fas fa-plus me-2"></i>Nova Eleição
+              </button>
+            </div>
+            <div class="card glass-card mb-4">
+              <div class="card-body">
+                <form id="eleicao-form">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="nome-eleicao" placeholder="Nome da Eleição" required>
+                        <label for="nome-eleicao">Nome da Eleição</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="date" class="form-control" id="data-eleicao" required>
+                        <label for="data-eleicao">Data da Eleição</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <select class="form-select" id="tipo-eleicao" required>
+                          <option value="" selected disabled>Selecione o tipo</option>
+                          <option value="escolar">Escolar</option>
+                          <option value="associacao">Associação</option>
+                          <option value="cipa">CIPA</option>
+                          <option value="gremio">Grêmio Estudantil</option>
+                        </select>
+                        <label for="tipo-eleicao">Tipo de Eleição</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary w-100">Salvar Eleição</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+            <div id="lista-eleicoes" class="row row-cols-1 row-cols-md-2 g-4">
+              <!-- Lista de eleições aqui -->
+            </div>
+          </div>
+          
+          <!-- Tab Candidatos -->
+          <div class="tab-pane fade" id="candidatos" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h4 class="card-title"><i class="fas fa-user-tie me-2"></i>Candidatos</h4>
+              <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#novoCandidatoModal">
+                <i class="fas fa-plus me-2"></i>Novo Candidato
+              </button>
+            </div>
+            <div class="card glass-card mb-4">
+              <div class="card-body">
+                <form id="candidato-form">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <select class="form-select" id="eleicao-candidato" required>
+                          <option value="" selected disabled>Selecione a eleição</option>
+                        </select>
+                        <label for="eleicao-candidato">Eleição</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="number" class="form-control" id="numero-candidato" placeholder="Número" required>
+                        <label for="numero-candidato">Número</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="nome-candidato" placeholder="Nome do Candidato" required>
+                        <label for="nome-candidato">Nome do Candidato</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <label class="form-label">Foto do Candidato</label>
+                      <input type="file" class="form-control" id="foto-candidato" accept="image/*">
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <textarea class="form-control" id="descricao-candidato" style="height: 100px" placeholder="Descrição"></textarea>
+                        <label for="descricao-candidato">Descrição</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary w-100">Salvar Candidato</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+            <div id="lista-candidatos" class="row row-cols-1 row-cols-md-3 g-4">
+              <!-- Lista de candidatos aqui -->
+            </div>
+          </div>
+          
+          <!-- Tab Eleitores -->
+          <div class="tab-pane fade" id="eleitores" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h4 class="card-title"><i class="fas fa-users me-2"></i>Eleitores</h4>
+              <div>
+                <button class="btn btn-outline-primary btn-sm me-2" id="btn-upload-csv">
+                  <i class="fas fa-file-upload me-2"></i>Upload CSV
+                </button>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#novoEleitorModal">
+                  <i class="fas fa-plus me-2"></i>Novo Eleitor
+                </button>
+              </div>
+            </div>
+            <div class="card glass-card mb-4">
+              <div class="card-body">
+                <form id="eleitor-form">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <select class="form-select" id="eleicao-eleitor" required>
+                          <option value="" selected disabled>Selecione a eleição</option>
+                        </select>
+                        <label for="eleicao-eleitor">Eleição</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="codigo-eleitor" placeholder="Matrícula/CPF/Código" required>
+                        <label for="codigo-eleitor">Matrícula/CPF/Código</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="nome-eleitor" placeholder="Nome do Eleitor" required>
+                        <label for="nome-eleitor">Nome do Eleitor</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary w-100">Salvar Eleitor</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+            <div class="card glass-card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Eleição</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody id="lista-eleitores">
+                      <!-- Lista de eleitores aqui -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <!-- Modais para cadastros -->
+  <div class="modal fade" id="novaEleicaoModal" tabindex="-1" aria-hidden="true">
+    <!-- Conteúdo do modal aqui -->
+  </div>
+  
+  <div class="modal fade" id="novoCandidatoModal" tabindex="-1" aria-hidden="true">
+    <!-- Conteúdo do modal aqui -->
+  </div>
+  
+  <div class="modal fade" id="novoEleitorModal" tabindex="-1" aria-hidden="true">
+    <!-- Conteúdo do modal aqui -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-storage.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
